@@ -1,0 +1,45 @@
+[package]
+name = "drvaudit"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.82"
+authors = ["grimh3xx"]
+description = "drvaudit — read-only kernel driver / module auditor: LOLDrivers + Microsoft blocklist matching, Authenticode hashing, signature and taint checks, baseline drift"
+repository = "https://github.com/grimh3xx/drvaudit"
+license = "MIT"
+keywords = ["security", "drivers", "byovd", "loldrivers", "blue-team"]
+categories = ["command-line-utilities"]
+readme = "README.md"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+owo-colors = { version = "4", features = ["supports-colors"] }
+anstream = "0.6"
+anyhow = "1"
+sha1 = "0.10"
+sha2 = "0.10"
+md-5 = "0.10"
+hex = "0.4"
+roxmltree = "0.20"
+walkdir = "2"
+ureq = { version = "2", default-features = false, features = ["tls"] }
+zip = { version = "2", default-features = false, features = ["deflate"] }
+x509-parser = "0.16"
+flate2 = { version = "1", default-features = false, features = ["rust_backend"] }
+ruzstd = "0.7"
+lzma-rs = "0.3"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.59", features = [
+    "Wdk_System_SystemInformation",
+    "Win32_Foundation",
+] }
+
+[profile.release]
+opt-level = 3
+lto = true
+strip = true
+codegen-units = 1
+panic = "abort"
