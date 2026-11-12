@@ -14,6 +14,11 @@ recommended vulnerable driver blocklist** using both the file hash and the
 flags, finds **hidden Linux modules** by comparing two kernel views, and
 reports drift against a baseline. It never loads, unloads or modifies a driver.
 
+
+<p align="center"><img src="docs/demo.svg" alt="drvaudit demo" width="100%"></p>
+
+<sub>Recorded from real output: `update` and the scan of a real Windows `System32\drivers` (923 drivers, no hits), then `tests/fixtures/linux-snapshot`, a compromised host with a hidden module, built by `tools/make_fixture.py`. Regenerate with `python3 tools/gen_demo.py`.</sub>
+
 ## Detections
 
 | ID | Severity | Detection |
@@ -45,6 +50,31 @@ Blocklist rules keyed on filename are bound to a signing CA through
 certificate in the driver's PKCS#7 chain and requires a match. An inbox
 `monitor.sys` from Microsoft therefore does not trip the rule written for
 IOBit's `Monitor.sys`.
+
+## Install
+
+**Pre-built binaries** (from [Releases](https://github.com/grimh3xx/drvaudit/releases/latest)):
+
+```sh
+# Linux x64
+curl -fsSL -o drvaudit https://github.com/grimh3xx/drvaudit/releases/latest/download/drvaudit-linux-x64
+chmod +x drvaudit && sudo mv drvaudit /usr/local/bin/
+```
+
+```powershell
+# Windows x64 (PowerShell)
+iwr https://github.com/grimh3xx/drvaudit/releases/latest/download/drvaudit-windows-x64.exe -OutFile drvaudit.exe
+.\drvaudit.exe --help
+```
+
+**From source** (Rust 1.82+):
+
+```sh
+cargo install --git https://github.com/grimh3xx/drvaudit
+```
+
+Run `drvaudit update` once after installing to fetch the threat-intel feeds. The binaries are not code-signed, so SmartScreen or Defender may flag
+them heuristically. Build from source if you prefer to verify.
 
 ## Usage
 

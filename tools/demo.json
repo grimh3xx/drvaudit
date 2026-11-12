@@ -1,0 +1,11 @@
+{
+  "title": "drvaudit — kernel driver audit",
+  "prompt": {"user": "grimh3xx@drvaudit", "path": "~/drvaudit"},
+  "steps": [
+    {"show": "drvaudit update", "run": "./target/release/drvaudit update", "chunk": 1, "speed": 6, "hold": 20},
+    {"show": "drvaudit scan /mnt/c/Windows/System32/drivers",
+     "run": "./target/release/drvaudit scan /mnt/c/Windows/System32/drivers", "chunk": 2, "hold": 35},
+    {"show": "drvaudit --root fx/linux-snapshot     # compromised host snapshot",
+     "run": "ln -sfn tests/fixtures fx && ./target/release/drvaudit --root fx/linux-snapshot; rm -f fx", "chunk": 2, "hold": 70}
+  ]
+}

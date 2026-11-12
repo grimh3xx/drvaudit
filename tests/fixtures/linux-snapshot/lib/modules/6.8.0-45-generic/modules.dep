@@ -1,0 +1,5 @@
+kernel/drivers/net/ethernet/intel/e1000e/e1000e.ko:
+kernel/drivers/gpu/drm/i915/i915.ko:
+updates/dkms/nvidia.ko:
+updates/dkms/vboxdrv.ko:
+extra/hid_logger.ko:
